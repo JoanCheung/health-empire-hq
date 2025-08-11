@@ -1,0 +1,112 @@
+<view class="container">
+  <!-- 进度指示器 -->
+  <view class="progress-bar">
+    <view class="progress-step {{step >= 1 ? 'active' : ''}}" data-step="1">
+      <text>基本信息</text>
+    </view>
+    <view class="progress-step {{step >= 2 ? 'active' : ''}}" data-step="2">
+      <text>舌诊问答</text>
+    </view> 
+    <view class="progress-step {{step >= 3 ? 'active' : ''}}" data-step="3">
+      <text>舌象拍摄</text>
+    </view>
+  </view>
+
+  <!-- 第一步：基本信息 -->
+  <view class="step-content" wx:if="{{step === 1}}">
+    <view class="form-section">
+      <view class="section-title">请填写您的基本信息</view>
+      
+      <view class="form-item">
+        <text class="label">性别</text>
+        <radio-group bindchange="onGenderChange">
+          <radio value="male" checked="{{formData.basicInfo.gender === 'male'}}">男</radio>
+          <radio value="female" checked="{{formData.basicInfo.gender === 'female'}}">女</radio>
+        </radio-group>
+      </view>
+
+      <view class="form-item">
+        <text class="label">年龄</text>
+        <input type="number" placeholder="请输入年龄" value="{{formData.basicInfo.age}}" bindinput="onAgeInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">身高 (cm)</text>
+        <input type="number" placeholder="请输入身高" value="{{formData.basicInfo.height}}" bindinput="onHeightInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">体重 (kg)</text>
+        <input type="number" placeholder="请输入体重" value="{{formData.basicInfo.weight}}" bindinput="onWeightInput" />
+      </view>
+
+      <button class="next-btn" bindtap="nextStep" disabled="{{!isStep1Valid}}">下一步</button>
+    </view>
+  </view>
+
+  <!-- 第二步：舌诊问答 -->
+  <view class="step-content" wx:if="{{step === 2}}">
+    <view class="form-section">
+      <view class="section-title">舌诊问答</view>
+      
+      <view class="question-item" wx:for="{{questions}}" wx:key="id">
+        <view class="question-text">{{item.text}}</view>
+        <radio-group bindchange="onQuestionChange" data-question="{{item.id}}">
+          <view class="option-item" wx:for="{{item.options}}" wx:for-item="option" wx:key="value">
+            <radio value="{{option.value}}" checked="{{formData.quizAnswers[item.id] === option.value}}">
+              {{option.label}}
+            </radio>
+          </view>
+        </radio-group>
+      </view>
+
+      <view class="button-group">
+        <button class="prev-btn" bindtap="prevStep">上一步</button>
+        <button class="next-btn" bindtap="nextStep" disabled="{{!isStep2Valid}}">下一步</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 第三步：舌象拍摄 -->
+  <view class="step-content" wx:if="{{step === 3}}">
+    <view class="form-section">
+      <view class="section-title">舌象拍摄（可选）</view>
+      <view class="section-desc">拍摄舌头照片可以帮助AI进行更准确的分析</view>
+      
+      <view class="camera-section">
+        <view class="camera-tips">
+          <text>拍摄建议：</text>
+          <text>• 光线充足的环境</text>
+          <text>• 伸出舌头，保持自然状态</text>
+          <text>• 确保舌头占画面的大部分</text>
+        </view>
+
+        <view class="image-preview" wx:if="{{tongueImage}}">
+          <image src="{{tongueImage}}" mode="aspectFit" />
+          <button class="retake-btn" bindtap="retakePicture">重新拍摄</button>
+        </view>
+
+        <button class="camera-btn" bindtap="takePicture" wx:if="{{!tongueImage}}">
+          <text>📷 拍摄舌头照片</text>
+        </button>
+
+        <button class="skip-btn" bindtap="skipPhoto" wx:if="{{!tongueImage}}">跳过拍摄</button>
+      </view>
+
+      <view class="button-group">
+        <button class="prev-btn" bindtap="prevStep">上一步</button>
+        <button class="submit-btn" bindtap="submitAssessment" loading="{{isSubmitting}}">
+          {{isSubmitting ? '分析中...' : '开始分析'}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载提示 -->
+  <view class="loading-modal" wx:if="{{showLoading}}">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text>{{loadingText}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="title">云函数测试页面</view>
+  
+  <button bindtap="testCloudAnalyze" type="primary">测试 analyze 云函数</button>
+  <button bindtap="testGetRecords" type="default">测试 getRecords 云函数</button>
+  
+  <view class="timeout-section">
+    <view class="section-title">⚡ 超时测试</view>
+    <button 
+      bindtap="runSimpleTest" 
+      type="warn"
+      disabled="{{simpleTesting}}"
+    >
+      {{simpleTesting ? '测试中...' : '测试5秒云函数'}}
+    </button>
+    <view wx:if="{{simpleTestResult}}" class="test-result">
+      <text wx:if="{{simpleTestResult.success}}" class="success">
+        ✅ 成功！服务器耗时: {{simpleTestResult.serverTime}}ms
+      </text>
+      <text wx:if="{{!simpleTestResult.success}}" class="error">
+        ❌ {{simpleTestResult.isTimeout ? '确认3秒超时问题！' : simpleTestResult.error}}
+      </text>
+    </view>
+  </view>
+
+  <view class="network-section">
+    <view class="section-title">🔍 网络诊断</view>
+    <button 
+      bindtap="runNetworkTest" 
+      type="default"
+      disabled="{{networkTesting}}"
+    >
+      {{networkTesting ? '诊断中...' : '开始网络诊断'}}
+    </button>
+  </view>
+  
+  <view class="note">
+    请查看控制台日志查看详细结果
+  </view>
+</view>

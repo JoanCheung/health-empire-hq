@@ -1,0 +1,74 @@
+<view class="container">
+  <view class="header">
+    <view class="title">🤖 AI分析统计</view>
+    <view class="subtitle">查看不同AI模型的使用情况</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-section">
+    <view class="loading-icon">⏳</view>
+    <text>加载统计数据中...</text>
+  </view>
+
+  <view wx:else>
+    <!-- 总体统计 -->
+    <view class="stats-overview">
+      <view class="stat-card">
+        <view class="stat-number">{{stats.total}}</view>
+        <view class="stat-label">总分析次数</view>
+      </view>
+      
+      <view class="stat-card qwen">
+        <view class="stat-number">{{stats.qwenCount}}</view>
+        <view class="stat-label">Qwen分析</view>
+      </view>
+      
+      <view class="stat-card gemini">
+        <view class="stat-number">{{stats.geminiCount}}</view>
+        <view class="stat-label">Gemini分析</view>
+      </view>
+      
+      <view class="stat-card offline">
+        <view class="stat-number">{{stats.offlineCount}}</view>
+        <view class="stat-label">离线分析</view>
+      </view>
+    </view>
+
+    <!-- 竞速胜率 -->
+    <view class="win-rate-section" wx:if="{{stats.qwenCount > 0 || stats.geminiCount > 0}}">
+      <view class="section-title">🏁 API竞速胜率</view>
+      <view class="win-rate-card">
+        <view class="win-rate-bar">
+          <view class="qwen-bar" style="width: {{stats.qwenWinRate}}%"></view>
+          <view class="gemini-bar" style="width: {{100 - stats.qwenWinRate}}%"></view>
+        </view>
+        <view class="win-rate-labels">
+          <view class="qwen-label">Qwen {{stats.qwenWinRate}}%</view>
+          <view class="gemini-label">Gemini {{100 - stats.qwenWinRate}}%</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最近分析记录 -->
+    <view class="recent-section" wx:if="{{stats.recentAnalysis.length > 0}}">
+      <view class="section-title">📋 最近分析记录</view>
+      <view class="recent-list">
+        <view class="recent-item" wx:for="{{stats.recentAnalysis}}" wx:key="index">
+          <view class="recent-date">{{item.date}}</view>
+          <view class="recent-info">
+            <view class="api-tag {{item.apiSource.toLowerCase()}}">
+              {{item.apiSource}}
+              <text wx:if="{{item.raceWinner}}" class="winner-badge">🏆</text>
+            </view>
+            <view class="health-score">评分: {{item.healthScore}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="refresh-btn" bindtap="refreshStats">刷新统计</button>
+      <button class="back-btn" bindtap="goBack">返回</button>
+    </view>
+  </view>
+</view>

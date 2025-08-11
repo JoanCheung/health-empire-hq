@@ -1,0 +1,64 @@
+.container {
+  padding: 40rpx;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+button {
+  margin-bottom: 20rpx;
+}
+
+.timeout-section {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background-color: #fff0f6;
+  border-radius: 10rpx;
+  border: 2rpx solid #eb2f96;
+}
+
+.timeout-section .section-title {
+  color: #eb2f96;
+}
+
+.test-result {
+  margin-top: 15rpx;
+  padding: 10rpx;
+  border-radius: 5rpx;
+  font-size: 26rpx;
+}
+
+.success {
+  color: #52c41a;
+}
+
+.error {
+  color: #ff4d4f;
+}
+
+.network-section {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background-color: #fff2e8;
+  border-radius: 10rpx;
+  border: 2rpx solid #faad14;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #faad14;
+  margin-bottom: 15rpx;
+  text-align: center;
+}
+
+.note {
+  margin-top: 40rpx;
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+}

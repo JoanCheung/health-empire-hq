@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/test-cloud/index",
+    "pages/quiz/index",
+    "pages/health-assessment/index",
+    "pages/ai-questions/index",
+    "pages/result/index",
+    "pages/example/index",
+    "pages/profile",
+    "pages/profile/index",
+    "pages/user-profile/index",
+    "pages/health-charts/index",
+    "pages/tongue-accuracy/index",
+    "pages/admin-panel/index",
+    "pages/network-test/index",
+    "pages/debug-db/index",
+    "pages/api-stats/index"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1BB394",
+    "navigationBarTitleText": "智慧健康诊断",
+    "navigationBarTextStyle": "white"
+  },
+  "networkTimeout": {
+    "request": 60000,
+    "connectSocket": 60000,
+    "uploadFile": 60000,
+    "downloadFile": 60000
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

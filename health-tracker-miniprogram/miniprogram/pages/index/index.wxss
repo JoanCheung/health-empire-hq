@@ -1,0 +1,304 @@
+/**index.wxss**/
+
+/* Homepage Container */
+.homepage-container {
+  padding: 80rpx 40rpx 60rpx;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Section */
+.header-section {
+  text-align: center;
+  margin-bottom: 80rpx;
+}
+
+.main-title {
+  font-size: 64rpx;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 20rpx;
+  letter-spacing: -1rpx;
+}
+
+.main-subtitle {
+  font-size: 32rpx;
+  color: #6B7280;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 600rpx;
+  margin: 0 auto;
+}
+
+/* Action Cards Section */
+.action-cards-section {
+  margin-bottom: 60rpx;
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.card-hover {
+  transform: translateY(-6rpx);
+  box-shadow: 0 16px 32px rgba(105, 93, 128, 0.15) !important;
+}
+
+.card-icon {
+  font-size: 56rpx;
+  margin-right: 32rpx;
+  width: 80rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 12rpx;
+  line-height: 1.2;
+}
+
+.card-description {
+  font-size: 28rpx;
+  color: #6B7280;
+  line-height: 1.4;
+}
+
+.card-arrow {
+  font-size: 40rpx;
+  color: #9CA3AF;
+  font-weight: 300;
+  margin-left: 20rpx;
+  transition: all 0.2s ease;
+}
+
+.action-card:hover .card-arrow {
+  color: #374151;
+  transform: translateX(4rpx);
+}
+
+/* Footer Section */
+.footer-section {
+  margin-top: auto;
+  text-align: center;
+  padding-top: 60rpx;
+}
+
+.disclaimer {
+  font-size: 24rpx;
+  color: #9CA3AF;
+  line-height: 1.6;
+  max-width: 560rpx;
+  margin: 0 auto;
+}
+
+/* Loading Styles */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid #e5e7eb;
+  border-top: 4rpx solid #1bb394;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #6b7280;
+}
+
+/* User Status Styles */
+.user-status-section {
+  margin-bottom: 40rpx;
+}
+
+.user-status-card {
+  background: linear-gradient(135deg, #1bb394, #16a085);
+  border-radius: 24rpx;
+  padding: 32rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 8rpx 24rpx rgba(27, 179, 148, 0.3);
+  margin-bottom: 20rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 24rpx;
+  border: 3rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8rpx;
+}
+
+.user-profile-status {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.user-profile-status.incomplete {
+  color: #fbbf24;
+}
+
+.complete-profile-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 16rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.complete-profile-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Login Prompt Styles */
+.login-prompt {
+  margin-bottom: 20rpx;
+}
+
+.login-card {
+  background: #f9fafb;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 24rpx;
+  padding: 48rpx 32rpx;
+  text-align: center;
+}
+
+.login-icon {
+  font-size: 80rpx;
+  margin-bottom: 24rpx;
+}
+
+.login-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 16rpx;
+}
+
+.login-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #6b7280;
+  margin-bottom: 32rpx;
+  line-height: 1.5;
+}
+
+.login-btn {
+  background: #1bb394;
+  color: white;
+  border-radius: 48rpx;
+  padding: 24rpx 48rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: none;
+  box-shadow: 0 6rpx 16rpx rgba(27, 179, 148, 0.3);
+  transition: all 0.3s ease;
+}
+
+.login-btn:active {
+  background: #16a085;
+  transform: translateY(2rpx);
+  box-shadow: 0 4rpx 12rpx rgba(27, 179, 148, 0.4);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 750px) {
+  .homepage-container {
+    padding: 60rpx 30rpx 50rpx;
+  }
+  
+  .main-title {
+    font-size: 52rpx;
+  }
+  
+  .main-subtitle {
+    font-size: 28rpx;
+  }
+  
+  .card-title {
+    font-size: 36rpx;
+  }
+  
+  .card-description {
+    font-size: 26rpx;
+  }
+  
+  .card-icon {
+    font-size: 48rpx;
+    width: 70rpx;
+    margin-right: 28rpx;
+  }
+  
+  .user-status-card {
+    padding: 28rpx;
+  }
+  
+  .user-avatar {
+    width: 60rpx;
+    height: 60rpx;
+    margin-right: 20rpx;
+  }
+  
+  .login-card {
+    padding: 40rpx 28rpx;
+  }
+}

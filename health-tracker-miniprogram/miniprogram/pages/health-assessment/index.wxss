@@ -1,0 +1,270 @@
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 进度条样式 */
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40rpx;
+  padding: 20rpx 0;
+  background: white;
+  border-radius: 10rpx;
+}
+
+.progress-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  color: #999;
+}
+
+.progress-step.active {
+  color: #1BB394;
+  font-weight: bold;
+}
+
+.progress-step::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -50%;
+  width: 100%;
+  height: 2rpx;
+  background: #ddd;
+  transform: translateY(-50%);
+}
+
+.progress-step:last-child::after {
+  display: none;
+}
+
+.progress-step.active::after {
+  background: #1BB394;
+}
+
+/* 表单样式 */
+.form-section {
+  background: white;
+  border-radius: 10rpx;
+  padding: 30rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.section-desc {
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.label {
+  display: block;
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+.form-item input {
+  width: 100%;
+  height: 80rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 0 20rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.form-item input:focus {
+  border-color: #1BB394;
+}
+
+.form-item radio-group {
+  display: flex;
+  gap: 30rpx;
+}
+
+.form-item radio {
+  margin-right: 15rpx;
+}
+
+/* 问题样式 */
+.question-item {
+  margin-bottom: 40rpx;
+  padding: 25rpx;
+  background: #f9f9f9;
+  border-radius: 10rpx;
+}
+
+.question-text {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  font-weight: 500;
+}
+
+.option-item {
+  margin-bottom: 15rpx;
+  display: flex;
+  align-items: center;
+}
+
+.option-item radio {
+  margin-right: 15rpx;
+}
+
+/* 相机部分样式 */
+.camera-section {
+  text-align: center;
+}
+
+.camera-tips {
+  background: #f0f8f0;
+  padding: 25rpx;
+  border-radius: 10rpx;
+  margin-bottom: 30rpx;
+  text-align: left;
+}
+
+.camera-tips text {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.camera-tips text:first-child {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.image-preview {
+  position: relative;
+  margin-bottom: 30rpx;
+}
+
+.image-preview image {
+  width: 400rpx;
+  height: 300rpx;
+  border-radius: 10rpx;
+  border: 2rpx solid #ddd;
+}
+
+.retake-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8rpx;
+  padding: 15rpx 30rpx;
+  font-size: 28rpx;
+  margin-top: 15rpx;
+}
+
+.camera-btn {
+  background: #1BB394;
+  color: white;
+  border: none;
+  border-radius: 8rpx;
+  padding: 25rpx 50rpx;
+  font-size: 32rpx;
+  margin-bottom: 20rpx;
+}
+
+.skip-btn {
+  background: #ddd;
+  color: #666;
+  border: none;
+  border-radius: 8rpx;
+  padding: 15rpx 30rpx;
+  font-size: 28rpx;
+}
+
+/* 按钮样式 */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40rpx;
+  gap: 20rpx;
+}
+
+.next-btn, .submit-btn {
+  flex: 1;
+  background: #1BB394;
+  color: white;
+  border: none;
+  border-radius: 8rpx;
+  height: 80rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.prev-btn {
+  flex: 1;
+  background: #ddd;
+  color: #666;
+  border: none;
+  border-radius: 8rpx;
+  height: 80rpx;
+  font-size: 32rpx;
+}
+
+.next-btn[disabled], .submit-btn[disabled] {
+  background: #ccc;
+  color: #999;
+}
+
+.next-btn:not([disabled]):active, .submit-btn:not([disabled]):active {
+  background: #16a085;
+}
+
+/* 加载样式 */
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-content {
+  background: white;
+  padding: 40rpx;
+  border-radius: 10rpx;
+  text-align: center;
+  min-width: 300rpx;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #1BB394;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

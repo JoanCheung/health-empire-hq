@@ -1,0 +1,391 @@
+/* 页面容器 */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f7f8fa;
+  padding: 20rpx;
+  gap: 20rpx;
+}
+
+/* 现代卡片样式 */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* KPI 区域 */
+.kpi-section {
+  margin-bottom: 20rpx;
+}
+
+.kpi-grid {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.kpi-card {
+  flex: 1;
+  text-align: center;
+}
+
+.kpi-title {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.kpi-value {
+  font-size: 48rpx;
+  color: #333;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.kpi-desc {
+  font-size: 22rpx;
+  color: #6B7280;
+  margin-top: 8rpx;
+  display: block;
+  text-align: center;
+}
+
+/* 主内容区域 */
+.main-content {
+  display: flex;
+  gap: 20rpx;
+}
+
+/* 左侧日历区域 */
+.calendar-section {
+  flex: 1;
+}
+
+/* 日历头部 */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+  padding: 0 20rpx;
+}
+
+.month-nav, .refresh-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background-color: #f0f8ff;
+  transition: all 0.2s ease;
+}
+
+.month-nav:active, .refresh-btn:active {
+  background-color: #e0f0ff;
+  transform: scale(0.95);
+}
+
+.refresh-btn {
+  background-color: #1BB394;
+  color: white;
+}
+
+.refresh-btn:active {
+  background-color: #16a085;
+}
+
+.debug-btn {
+  background-color: #FF6B6B;
+  color: white;
+}
+
+.debug-btn:active {
+  background-color: #FF5252;
+}
+
+.nav-arrow {
+  font-size: 36rpx;
+  color: #007aff;
+  font-weight: bold;
+}
+
+.month-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 星期头部 */
+.week-header {
+  display: flex;
+  margin-bottom: 20rpx;
+  padding: 0 10rpx;
+}
+
+.week-day {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+  font-weight: 500;
+  padding: 20rpx 0;
+}
+
+/* 日历网格 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8rpx;
+}
+
+.calendar-day {
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 12rpx;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.calendar-day:active {
+  transform: scale(0.95);
+}
+
+.day-number {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  z-index: 2;
+}
+
+/* 其他月份的日期 */
+.other-month .day-number {
+  color: #ccc;
+}
+
+/* 有记录的日期样式 */
+.has-record {
+  background-color: #f0f8ff;
+  border: 2rpx solid #007aff;
+}
+
+.has-record .day-number {
+  color: #007aff;
+  font-weight: 600;
+}
+
+/* 记录点 */
+.record-dot {
+  position: absolute;
+  bottom: 8rpx;
+  width: 8rpx;
+  height: 8rpx;
+  background-color: #ff6b6b;
+  border-radius: 50%;
+}
+
+/* 选中的日期 */
+.selected {
+  background-color: #007aff !important;
+  border-color: #007aff !important;
+}
+
+.selected .day-number {
+  color: white !important;
+  font-weight: 600;
+}
+
+.selected .record-dot {
+  background-color: white;
+}
+
+/* 右侧详情区域 */
+.details-section {
+  flex: 1;
+}
+
+/* 记录卡片 */
+.record-card {
+  width: 100%;
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.record-date {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.record-time {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 记录内容 */
+.record-content {
+  margin-bottom: 30rpx;
+}
+
+.record-item {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.item-label {
+  font-size: 28rpx;
+  color: #666;
+  width: 120rpx;
+  flex-shrink: 0;
+}
+
+.item-value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 提示样式 */
+.today-tip, .no-data-tip {
+  display: flex;
+  align-items: center;
+  padding: 40rpx;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.tip-icon {
+  font-size: 48rpx;
+  margin-right: 20rpx;
+}
+
+.tip-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tip-title {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.tip-subtitle {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.start-assessment-btn {
+  background: #1BB394;
+  color: white;
+  border-radius: 8rpx;
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  border: none;
+  margin-top: 10rpx;
+  font-weight: 500;
+}
+
+/* 备注区域 */
+.record-notes {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background-color: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.notes-label {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.notes-content {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* 图表容器 */
+.chart-container {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  background-color: #fafbfc;
+  border-radius: 12rpx;
+  border: 1rpx solid #e9ecef;
+  text-align: center;
+}
+
+.chart-placeholder {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 无记录状态 */
+.no-record {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400rpx;
+}
+
+.no-record-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 响应式设计 */
+@media (max-width: 750px) {
+  .main-content {
+    flex-direction: column;
+  }
+  
+  .kpi-grid {
+    flex-direction: column;
+    gap: 15rpx;
+  }
+  
+  .calendar-section,
+  .details-section {
+    flex: none;
+  }
+  
+  .calendar-grid {
+    gap: 4rpx;
+  }
+
+  .calendar-day {
+    height: 80rpx;
+  }
+  
+  .day-number {
+    font-size: 24rpx;
+  }
+}

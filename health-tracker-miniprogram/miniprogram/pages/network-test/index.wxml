@@ -1,0 +1,58 @@
+<!-- network-test/index.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">🔍 网络连接诊断</text>
+    <text class="subtitle">诊断AI功能网络连接问题</text>
+  </view>
+
+  <view class="test-section">
+    <button 
+      class="test-btn {{testing ? 'disabled' : ''}}" 
+      bindtap="runNetworkTest"
+      disabled="{{testing}}"
+    >
+      {{testing ? '诊断中...' : '开始网络诊断'}}
+    </button>
+  </view>
+
+  <!-- 错误信息 -->
+  <view wx:if="{{error}}" class="error-section">
+    <view class="error-title">❌ 诊断失败</view>
+    <view class="error-content">{{error}}</view>
+  </view>
+
+  <!-- 诊断结果 -->
+  <view wx:if="{{results}}" class="results-section">
+    <view class="results-header">
+      <text class="results-title">📊 诊断结果</text>
+      <button class="copy-btn" bindtap="copyResults">复制结果</button>
+    </view>
+    
+    <view class="summary">
+      <text>总测试: {{summary.totalTests}}</text>
+      <text>成功: {{summary.successCount}}</text>
+      <text>失败: {{summary.failedCount}}</text>
+    </view>
+
+    <view class="test-results">
+      <view 
+        wx:for="{{results.tests}}" 
+        wx:key="name"
+        class="test-item {{item.status.toLowerCase()}}"
+      >
+        <view class="test-header">
+          <text class="test-name">{{item.name}}</text>
+          <text class="test-status">{{item.status}}</text>
+        </view>
+        
+        <view wx:if="{{item.details}}" class="test-details">
+          <text>{{item.details}}</text>
+        </view>
+        
+        <view wx:if="{{item.error}}" class="test-error">
+          <text>错误: {{item.error}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

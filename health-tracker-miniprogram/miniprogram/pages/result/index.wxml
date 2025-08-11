@@ -1,0 +1,147 @@
+<view class="container">
+  <!-- 健康评分卡片 -->
+  <view class="score-card">
+    <view class="score-circle">
+      <view class="score-number">{{result.healthScore || 0}}</view>
+      <view class="score-total">/100</view>
+    </view>
+    <view class="score-text">健康评分</view>
+    <view class="bmi-info">
+      <text>BMI: {{result.bmi}} ({{result.bmiStatus}})</text>
+    </view>
+    <!-- 离线分析标识 -->
+    <view class="offline-badge" wx:if="{{result.isOfflineAnalysis}}">
+      <text>📱 离线分析</text>
+    </view>
+    
+    <!-- API来源信息 -->
+    <view class="api-badge" wx:if="{{result.apiSource}}">
+      <text>🤖 由 {{result.apiSource}} 分析</text>
+    </view>
+  </view>
+
+  <!-- 整体评估 -->
+  <view class="section-card">
+    <view class="section-title">
+      <view class="icon">📋</view>
+      <text>整体评估</text>
+    </view>
+    <view class="section-content">
+      <text class="assessment-text">{{result.overallAssessment}}</text>
+    </view>
+  </view>
+
+  <!-- 舌诊分析 -->
+  <view class="section-card" wx:if="{{result.tongueAnalysis}}">
+    <view class="section-title">
+      <view class="icon">👅</view>
+      <text>舌诊分析</text>
+    </view>
+    <view class="section-content">
+      <view class="tongue-item">
+        <text class="tongue-label">舌色：</text>
+        <text class="tongue-value">{{result.tongueAnalysis.color}}</text>
+      </view>
+      <view class="tongue-item">
+        <text class="tongue-label">舌苔：</text>
+        <text class="tongue-value">{{result.tongueAnalysis.coating}}</text>
+      </view>
+      <view class="tongue-item">
+        <text class="tongue-label">综合：</text>
+        <text class="tongue-value">{{result.tongueAnalysis.overall}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 风险因素 -->
+  <view class="section-card" wx:if="{{result.riskFactors && result.riskFactors.length > 0}}">
+    <view class="section-title">
+      <view class="icon">⚠️</view>
+      <text>注意事项</text>
+    </view>
+    <view class="section-content">
+      <view class="risk-item" wx:for="{{result.riskFactors}}" wx:key="*this">
+        <view class="risk-dot"></view>
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 健康建议 -->
+  <view class="section-card" wx:if="{{result.suggestions && result.suggestions.length > 0}}">
+    <view class="section-title">
+      <view class="icon">💡</view>
+      <text>健康建议</text>
+    </view>
+    <view class="section-content">
+      <view class="suggestion-item" wx:for="{{result.suggestions}}" wx:key="*this">
+        <view class="suggestion-number">{{index + 1}}</view>
+        <text class="suggestion-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 体质分析 -->
+  <view class="section-card" wx:if="{{result.tcmConstitution}}">
+    <view class="section-title">
+      <view class="icon">🏺</view>
+      <text>中医体质</text>
+    </view>
+    <view class="section-content">
+      <text class="constitution-text">{{result.tcmConstitution}}</text>
+    </view>
+  </view>
+
+  <!-- 季节性建议 -->
+  <view class="section-card" wx:if="{{result.seasonalAdvice}}">
+    <view class="section-title">
+      <view class="icon">🌱</view>
+      <text>季节养生</text>
+    </view>
+    <view class="section-content">
+      <text class="seasonal-text">{{result.seasonalAdvice}}</text>
+    </view>
+  </view>
+
+  <!-- 后续建议 -->
+  <view class="section-card" wx:if="{{result.followUpRecommendations && result.followUpRecommendations.length > 0}}">
+    <view class="section-title">
+      <view class="icon">📅</view>
+      <text>后续建议</text>
+    </view>
+    <view class="section-content">
+      <view class="followup-item" wx:for="{{result.followUpRecommendations}}" wx:key="*this">
+        <view class="followup-dot"></view>
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 免责声明 -->
+  <view class="disclaimer-card">
+    <view class="disclaimer-title">免责声明</view>
+    <text class="disclaimer-text">{{result.disclaimer || '此分析仅供参考，如有严重不适请及时就医'}}</text>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="share-btn" bindtap="shareResult">分享结果</button>
+    <button class="new-assessment-btn" bindtap="newAssessment">重新评估</button>
+  </view>
+
+  <!-- API统计入口 -->
+  <view class="api-stats-section" wx:if="{{result.apiSource}}">
+    <button class="api-stats-btn" bindtap="viewAPIStats">
+      📊 查看AI分析统计 (本次由{{result.apiSource}}分析)
+    </button>
+  </view>
+
+  <!-- 隐藏的Canvas用于截图 -->
+    <!-- 导航按钮 -->
+  <view class="navigation-buttons">
+    <button class="nav-btn primary" bindtap="goToHome">返回首页</button>
+    <button class="nav-btn secondary" bindtap="goToProfile">我的健康档案</button>
+  </view>
+
+  <canvas canvas-id="result-canvas" class="screenshot-canvas"></canvas>
+</view>

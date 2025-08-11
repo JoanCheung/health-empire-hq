@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="header">
+    <view class="ai-icon">🤖</view>
+    <view class="title">AI智能诊断</view>
+    <view class="subtitle">基于您的初始信息，AI为您生成了以下针对性问题</view>
+  </view>
+
+  <view class="questions-section">
+    <view class="question-card" wx:for="{{aiQuestions}}" wx:key="index">
+      <view class="question-number">问题 {{index + 1}}</view>
+      <view class="question-text">{{item.questionText}}</view>
+      
+      <radio-group bindchange="onAnswerChange" data-index="{{index}}">
+        <view class="option-item" wx:for="{{item.options}}" wx:for-item="option" wx:key="*this">
+          <radio value="{{option}}" checked="{{answers['question' + index] === option}}">
+            {{option}}
+          </radio>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+
+  <view class="progress-info">
+    <text>已回答：{{answeredCount}}/{{aiQuestions.length}}</text>
+  </view>
+
+  <view class="action-buttons">
+    <button class="skip-btn" bindtap="skipAIQuestions">跳过AI问题</button>
+    <button class="submit-btn" bindtap="submitAnswers" disabled="{{!allAnswered}}" loading="{{isSubmitting}}">
+      {{isSubmitting ? '分析中...' : '完成并分析'}}
+    </button>
+  </view>
+
+  <!-- 加载提示 -->
+  <view class="loading-modal" wx:if="{{showLoading}}">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text>{{loadingText}}</text>
+    </view>
+  </view>
+</view>

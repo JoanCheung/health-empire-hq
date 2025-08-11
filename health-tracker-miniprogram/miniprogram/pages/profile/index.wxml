@@ -1,0 +1,155 @@
+<view class="container">
+  <!-- KPI Section -->
+  <view class="kpi-section">
+    <view class="kpi-grid">
+      <view class="card kpi-card">
+        <text class="kpi-title">连续记录天数</text>
+        <text class="kpi-value">{{kpis.consecutiveDays}}天</text>
+        <text class="kpi-desc" wx:if="{{kpis.consecutiveDays > 0}}">{{kpis.consecutiveDays >= 7 ? '坚持得很好！' : '继续加油！'}}</text>
+      </view>
+      <view class="card kpi-card">
+        <text class="kpi-title">平均精力水平</text>
+        <text class="kpi-value">{{kpis.averageEnergyLevel > 0 ? kpis.averageEnergyLevel + '分' : '暂无数据'}}</text>
+        <text class="kpi-desc" wx:if="{{kpis.averageEnergyLevel > 0}}">{{kpis.averageEnergyLevel >= 8 ? '精力充沛' : kpis.averageEnergyLevel >= 6 ? '状态较好' : '需要休息'}}</text>
+      </view>
+      <view class="card kpi-card">
+        <text class="kpi-title">本月记录次数</text>
+        <text class="kpi-value">{{kpis.monthlyRecords}}次</text>
+        <text class="kpi-desc">{{kpis.monthlyRecords >= 10 ? '记录充分' : kpis.monthlyRecords >= 5 ? '记录适中' : '建议多记录'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Main Content -->
+  <view class="main-content">
+    <!-- Left Column: Calendar -->
+    <view class="calendar-section">
+      <view class="card">
+        <!-- Calendar Header -->
+        <view class="calendar-header">
+          <view class="month-nav" bindtap="prevMonth">
+            <text class="nav-arrow">‹</text>
+          </view>
+          <view class="month-title">{{currentYear}}年{{currentMonth}}月</view>
+          <view wx:if="{{showDebugButtons}}" class="refresh-btn" bindtap="getRecords">
+            <text>🔄</text>
+          </view>
+          <view wx:if="{{showDebugButtons}}" class="debug-btn" bindtap="goToDebug">
+            <text>🔍</text>
+          </view>
+          <view class="month-nav" bindtap="nextMonth">
+            <text class="nav-arrow">›</text>
+          </view>
+        </view>
+        
+        <!-- Week Headers -->
+        <view class="week-header">
+          <view class="week-day">日</view>
+          <view class="week-day">一</view>
+          <view class="week-day">二</view>
+          <view class="week-day">三</view>
+          <view class="week-day">四</view>
+          <view class="week-day">五</view>
+          <view class="week-day">六</view>
+        </view>
+        
+        <!-- Calendar Grid -->
+        <view class="calendar-grid">
+          <block wx:for="{{calendarDays}}" wx:key="uniqueId">
+            <view class="calendar-day {{item.hasRecord ? 'has-record' : ''}} {{item.isSelected ? 'selected' : ''}} {{item.isCurrentMonth ? '' : 'other-month'}}" 
+                  bindtap="handleDateClick" 
+                  data-date="{{item.date}}"
+                  data-full-date="{{item.fullDate}}">
+              <text class="day-number">{{item.day}}</text>
+              <view wx:if="{{item.hasRecord}}" class="record-dot"></view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+    
+    <!-- Right Column: Record Details -->
+    <view class="details-section">
+      <view class="card">
+        <!-- 今日数据提示 -->
+        <view wx:if="{{!selectedRecord && records.length > 0}}" class="today-tip">
+          <view class="tip-icon">📅</view>
+          <view class="tip-content">
+            <text class="tip-title">点击日期查看记录</text>
+            <text class="tip-subtitle">有数据的日期会显示小圆点</text>
+          </view>
+        </view>
+        
+        <!-- 无数据提示 -->
+        <view wx:if="{{records.length === 0}}" class="no-data-tip">
+          <view class="tip-icon">💡</view>
+          <view class="tip-content">
+            <text class="tip-title">还没有健康记录</text>
+            <text class="tip-subtitle">完成健康诊断后数据会显示在这里</text>
+            <button class="start-assessment-btn" bindtap="goToAssessment">开始健康诊断</button>
+          </view>
+        </view>
+        
+        <view wx:if="{{selectedRecord}}" class="record-card">
+          <view class="record-header">
+            <text class="record-date">{{selectedRecord.date}}</text>
+            <text class="record-time">{{selectedRecord.time}}</text>
+          </view>
+          
+          <view class="record-content">
+            <!-- 健康评分 -->
+            <view class="record-item" wx:if="{{selectedRecord.healthScore}}">
+              <text class="item-label">健康评分：</text>
+              <text class="item-value health-score">{{selectedRecord.healthScore}}分</text>
+            </view>
+            
+            <!-- 基本信息 -->
+            <view class="record-item" wx:if="{{selectedRecord.age}}">
+              <text class="item-label">年龄性别：</text>
+              <text class="item-value">{{selectedRecord.age}}岁 / {{selectedRecord.gender}}</text>
+            </view>
+            
+            <!-- BMI信息 -->
+            <view class="record-item" wx:if="{{selectedRecord.bmi}}">
+              <text class="item-label">BMI：</text>
+              <text class="item-value">{{selectedRecord.bmi}} ({{selectedRecord.bmiStatus}})</text>
+            </view>
+            
+            <view class="record-item" wx:if="{{selectedRecord.weight && selectedRecord.height}}">
+              <text class="item-label">身高体重：</text>
+              <text class="item-value">{{selectedRecord.height}}cm / {{selectedRecord.weight}}kg</text>
+            </view>
+            
+            <!-- 中医体质 -->
+            <view class="record-item" wx:if="{{selectedRecord.constitution}}">
+              <text class="item-label">中医体质：</text>
+              <text class="item-value constitution">{{selectedRecord.constitution}}</text>
+            </view>
+            
+            <!-- 风险因素 -->
+            <view class="record-notes" wx:if="{{selectedRecord.notes}}">
+              <text class="notes-label">健康提示：</text>
+              <text class="notes-content">{{selectedRecord.notes}}</text>
+            </view>
+            
+            <!-- 整体评估 -->
+            <view class="record-assessment" wx:if="{{selectedRecord.overallAssessment}}">
+              <text class="assessment-label">健康评估：</text>
+              <text class="assessment-content">{{selectedRecord.overallAssessment}}</text>
+            </view>
+          </view>
+          
+          <!-- 操作按钮 -->
+          <view class="record-actions">
+            <button class="action-btn secondary" bindtap="viewFullAnalysis" data-record-id="{{selectedRecord._id}}">查看完整分析</button>
+            <button wx:if="{{showDebugButtons}}" class="action-btn debug" bindtap="debugRecord" data-record="{{selectedRecord}}">调试信息</button>
+          </view>
+        </view>
+        
+        <view wx:else class="no-record">
+          <text class="no-record-text">请选择日期查看健康记录</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

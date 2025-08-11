@@ -1,0 +1,30 @@
+# FastAPI 和相关依赖
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+
+# 数据库相关
+sqlalchemy==2.0.25
+# sqlite3 是 Python 内置模块，不需要单独安装
+
+# 数据验证和设置管理
+pydantic[email]==2.6.0
+pydantic-settings==2.1.0
+
+# 密码加密和认证
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+
+# HTTP 客户端（测试用）
+httpx==0.26.0
+
+# 开发和测试工具
+pytest==7.4.4
+pytest-asyncio==0.23.2
+
+# 类型检查和代码质量
+mypy==1.8.0
+ruff==0.1.11
+
+# 代码格式化
+black==23.12.1
+isort==5.13.2

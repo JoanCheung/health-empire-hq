@@ -1,0 +1,220 @@
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.loading-section {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #666;
+}
+
+.loading-icon {
+  font-size: 60rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 统计概览 */
+.stats-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.qwen {
+  background: linear-gradient(135deg, #1BB394, #16a085);
+  color: white;
+}
+
+.stat-card.gemini {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+}
+
+.stat-card.offline {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  color: white;
+}
+
+.stat-number {
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+/* 胜率部分 */
+.win-rate-section, .recent-section {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.win-rate-card {
+  margin-top: 20rpx;
+}
+
+.win-rate-bar {
+  height: 40rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  display: flex;
+  background: #f0f0f0;
+}
+
+.qwen-bar {
+  background: linear-gradient(90deg, #1BB394, #16a085);
+  transition: width 0.3s ease;
+}
+
+.gemini-bar {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  transition: width 0.3s ease;
+}
+
+.win-rate-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15rpx;
+  font-size: 24rpx;
+}
+
+.qwen-label {
+  color: #1BB394;
+  font-weight: bold;
+}
+
+.gemini-label {
+  color: #3498db;
+  font-weight: bold;
+}
+
+/* 最近记录 */
+.recent-list {
+  max-height: 600rpx;
+  overflow-y: auto;
+}
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.recent-item:last-child {
+  border-bottom: none;
+}
+
+.recent-date {
+  font-size: 24rpx;
+  color: #666;
+  width: 200rpx;
+}
+
+.recent-info {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.api-tag {
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5rpx;
+}
+
+.api-tag.qwen {
+  background: #1BB394;
+  color: white;
+}
+
+.api-tag.gemini {
+  background: #3498db;
+  color: white;
+}
+
+.api-tag.offline, .api-tag.mock {
+  background: #95a5a6;
+  color: white;
+}
+
+.winner-badge {
+  font-size: 18rpx;
+}
+
+.health-score {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+
+.refresh-btn, .back-btn {
+  flex: 1;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.refresh-btn {
+  background: #1BB394;
+  color: white;
+}
+
+.back-btn {
+  background: #95a5a6;
+  color: white;
+}

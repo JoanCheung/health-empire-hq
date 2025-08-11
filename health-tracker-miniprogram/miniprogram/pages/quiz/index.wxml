@@ -1,0 +1,218 @@
+<view class="quiz-container">
+  <!-- Loading Overlay -->
+  <view wx:if="{{showLoading}}" class="loading-overlay">
+    <view class="loading-content">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">{{loadingText}}</text>
+    </view>
+  </view>
+
+  <!-- AI Questions Flow -->
+  <view wx:if="{{showAIQuestions}}" class="ai-questions-container">
+    <!-- AI Questions Header -->
+    <view class="ai-header">
+      <view class="ai-title">个性化澄清问题</view>
+      <view class="ai-subtitle">基于您的初始信息，AI为您生成了以下澄清问题</view>
+      <view class="ai-progress">
+        <text>{{currentAIStep + 1}} / {{aiQuestions.length}}</text>
+      </view>
+    </view>
+
+    <!-- Current AI Question -->
+    <view wx:if="{{!isAIQuestionsCompleted}}" class="ai-question-card">
+      <view class="question-title">{{aiQuestions[currentAIStep].questionText}}</view>
+      <checkbox-group bindchange="onAIQuestionChange" data-index="{{currentAIStep}}">
+        <label wx:for="{{aiQuestions[currentAIStep].options}}" wx:key="*this" class="ai-option">
+          <checkbox value="{{index}}" />
+          <text class="option-text">{{item}}</text>
+        </label>
+      </checkbox-group>
+      
+      <view class="ai-question-buttons">
+        <button wx:if="{{currentAIStep > 0}}" class="btn-secondary" bindtap="prevAIQuestion">上一题</button>
+        <button class="btn-primary" bindtap="nextAIQuestion">
+          {{currentAIStep === aiQuestions.length - 1 ? '完成问答' : '下一题'}}
+        </button>
+      </view>
+    </view>
+
+    <!-- AI Questions Completed -->
+    <view wx:if="{{isAIQuestionsCompleted}}" class="ai-completed">
+      <view class="completion-icon">✅</view>
+      <view class="completion-title">澄清问题回答完成</view>
+      <view class="completion-desc">现在将基于您的所有回答进行深度健康分析</view>
+      <button class="btn-primary large" bindtap="handleFinalSubmit">开始深度分析</button>
+    </view>
+  </view>
+
+  <!-- Main Quiz Flow -->
+  <view wx:else class="main-quiz">
+    <!-- Progress Indicator -->
+    <view class="progress-header">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{(step / totalSteps) * 100}}%;"></view>
+      </view>
+      <text class="progress-text">第 {{step}} 步，共 {{totalSteps}} 步</text>
+    </view>
+
+    <!-- Step 1: Basic Information -->
+    <view wx:if="{{step === 1}}" class="step-container">
+      <view class="step-header">
+        <view class="step-title">基本信息</view>
+        <view class="step-desc">请填写您的基本健康信息</view>
+      </view>
+
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">性别</text>
+          <radio-group class="radio-group" bindchange="onGenderChange">
+            <label class="radio-item">
+              <radio value="male" checked="{{formData.basicInfo.gender === 'male'}}" />
+              <text>男</text>
+            </label>
+            <label class="radio-item">
+              <radio value="female" checked="{{formData.basicInfo.gender === 'female'}}" />
+              <text>女</text>
+            </label>
+          </radio-group>
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">年龄</text>
+          <input class="form-input" type="number" placeholder="请输入年龄" 
+                 value="{{formData.basicInfo.age}}" bindinput="onAgeInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">身高 (cm)</text>
+          <input class="form-input" type="number" placeholder="如：170" 
+                 value="{{formData.basicInfo.height}}" bindinput="onHeightInput" />
+        </view>
+
+        <view class="form-item">
+          <text class="form-label">体重 (kg)</text>
+          <input class="form-input" type="number" placeholder="如：65" 
+                 value="{{formData.basicInfo.weight}}" bindinput="onWeightInput" />
+        </view>
+      </view>
+
+      <view class="step-buttons">
+        <button class="btn-primary" bindtap="nextStep" disabled="{{!isStep1Valid}}">下一步</button>
+      </view>
+    </view>
+
+    <!-- Step 2: Basic Tongue Diagnosis Questions -->
+    <view wx:if="{{step === 2}}" class="step-container">
+      <view class="step-header">
+        <view class="step-title">基础舌诊问题</view>
+        <view class="step-desc">请根据实际情况回答以下基础问题</view>
+      </view>
+
+      <view class="questions-section">
+        <view wx:for="{{questionsStep2}}" wx:key="id" class="question-card">
+          <view class="question-text">{{item.text}}</view>
+          <radio-group class="options-group" bindchange="onQuestionChange" data-question="{{item.id}}">
+            <label wx:for="{{item.options}}" wx:for-item="option" wx:key="value" class="option-item">
+              <radio value="{{option.value}}" 
+                     checked="{{formData.quizAnswers[item.id] === option.value}}" />
+              <text class="option-label">{{option.label}}</text>
+            </label>
+          </radio-group>
+        </view>
+      </view>
+
+      <view class="step-buttons">
+        <button class="btn-secondary" bindtap="prevStep">上一步</button>
+        <button class="btn-primary" bindtap="nextStep" disabled="{{!isStep2Valid}}">下一步</button>
+      </view>
+    </view>
+
+    <!-- Step 3: Symptom Assessment Questions -->
+    <view wx:if="{{step === 3}}" class="step-container">
+      <view class="step-header">
+        <view class="step-title">症状评估问题</view>
+        <view class="step-desc">请回答关于消化、体能和体温的问题</view>
+      </view>
+
+      <view class="questions-section">
+        <view wx:for="{{questionsStep3}}" wx:key="id" class="question-card">
+          <view class="question-category">{{item.category}}</view>
+          <view class="question-text">{{item.text}}</view>
+          <radio-group class="options-group" bindchange="onQuestionChange" data-question="{{item.id}}">
+            <label wx:for="{{item.options}}" wx:for-item="option" wx:key="value" class="option-item">
+              <radio value="{{option.value}}" 
+                     checked="{{formData.quizAnswers[item.id] === option.value}}" />
+              <text class="option-label">{{option.label}}</text>
+            </label>
+          </radio-group>
+        </view>
+      </view>
+
+      <view class="step-buttons">
+        <button class="btn-secondary" bindtap="prevStep">上一步</button>
+        <button class="btn-primary" bindtap="nextStep" disabled="{{!isStep3Valid}}">下一步</button>
+      </view>
+    </view>
+
+    <!-- Step 4: Comprehensive Assessment -->
+    <view wx:if="{{step === 4}}" class="step-container">
+      <view class="step-header">
+        <view class="step-title">综合评估问题</view>
+        <view class="step-desc">请回答关于情绪、生活习惯和整体健康的问题</view>
+      </view>
+
+      <view class="questions-section">
+        <view wx:for="{{questionsStep4}}" wx:key="id" class="question-card">
+          <view class="question-category">{{item.category}}</view>
+          <view class="question-text">{{item.text}}</view>
+          
+          <!-- 单选问题 -->
+          <radio-group wx:if="{{item.type !== 'multiple'}}" class="options-group" 
+                      bindchange="onQuestionChange" data-question="{{item.id}}">
+            <label wx:for="{{item.options}}" wx:for-item="option" wx:key="value" class="option-item">
+              <radio value="{{option.value}}" 
+                     checked="{{formData.quizAnswers[item.id] === option.value}}" />
+              <text class="option-label">{{option.label}}</text>
+            </label>
+          </radio-group>
+          
+          <!-- 多选问题 -->
+          <checkbox-group wx:if="{{item.type === 'multiple'}}" class="options-group" 
+                         bindchange="onQuestionChange" data-question="{{item.id}}" data-type="multiple">
+            <label wx:for="{{item.options}}" wx:for-item="option" wx:key="value" class="option-item checkbox-item">
+              <checkbox value="{{index}}" />
+              <text class="option-label">{{option.label}}</text>
+            </label>
+          </checkbox-group>
+        </view>
+      </view>
+
+      <!-- 舌头照片部分（在第4步集成） -->
+      <view class="photo-section">
+        <view class="section-title">舌诊照片（可选）</view>
+        <view class="section-desc">拍摄舌头照片有助于更准确的诊断</view>
+        
+        <view wx:if="{{!tongueImage}}" class="photo-placeholder">
+          <view class="camera-icon">📷</view>
+          <text class="photo-tip">拍摄时请确保光线充足，舌头完全伸出</text>
+          <button class="btn-camera" bindtap="takePicture">拍摄舌头照片</button>
+        </view>
+
+        <view wx:else class="photo-preview">
+          <image class="preview-image" src="{{tongueImage}}" mode="aspectFit" />
+          <view class="photo-actions">
+            <button class="btn-secondary small" bindtap="retakePicture">重新拍摄</button>
+          </view>
+        </view>
+      </view>
+
+      <view class="step-buttons">
+        <button class="btn-secondary" bindtap="prevStep">上一步</button>
+        <button class="btn-outline" bindtap="skipPhoto">跳过拍摄</button>
+        <button class="btn-primary" bindtap="handleSubmit" disabled="{{isSubmitting || !isStep4Valid}}">
+          {{isSubmitting ? '处理中...' : '开始分析'}}
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,267 @@
+/* 用户个人信息完善页面样式 */
+.profile-container {
+  padding: 40rpx;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.header-section {
+  text-align: center;
+  margin-bottom: 40rpx;
+  padding-bottom: 32rpx;
+  border-bottom: 2rpx solid #e5e7eb;
+}
+
+.header-title {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 16rpx;
+}
+
+.header-desc {
+  font-size: 28rpx;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Form Section */
+.form-section {
+  margin-bottom: 60rpx;
+}
+
+.form-group {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.group-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #1bb394;
+  margin-bottom: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #e0f2f1;
+}
+
+.form-item {
+  margin-bottom: 24rpx;
+}
+
+.form-item:last-child {
+  margin-bottom: 0;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.form-item.half {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.item-label {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 12rpx;
+  position: relative;
+}
+
+.item-label.required::after {
+  content: '*';
+  color: #ef4444;
+  margin-left: 8rpx;
+  font-weight: 600;
+}
+
+.item-input {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  color: #374151;
+  background: #ffffff;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.item-input:focus {
+  border-color: #1bb394;
+  box-shadow: 0 0 0 4rpx rgba(27, 179, 148, 0.1);
+}
+
+.item-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 20rpx 24rpx;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  color: #374151;
+  background: #ffffff;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  line-height: 1.5;
+}
+
+.item-textarea:focus {
+  border-color: #1bb394;
+  box-shadow: 0 0 0 4rpx rgba(27, 179, 148, 0.1);
+}
+
+/* Gender Selection */
+.gender-group {
+  display: flex;
+  gap: 32rpx;
+}
+
+.gender-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 32rpx;
+  color: #374151;
+  cursor: pointer;
+}
+
+.gender-item radio {
+  transform: scale(1.2);
+}
+
+/* Action Section */
+.action-section {
+  padding: 0 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.save-btn {
+  width: 100%;
+  height: 96rpx;
+  background: linear-gradient(135deg, #1bb394, #16a085);
+  color: white;
+  border: none;
+  border-radius: 48rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  box-shadow: 0 8rpx 24rpx rgba(27, 179, 148, 0.3);
+  transition: all 0.3s ease;
+}
+
+.save-btn:active {
+  background: linear-gradient(135deg, #16a085, #138f7a);
+  transform: translateY(2rpx);
+  box-shadow: 0 6rpx 20rpx rgba(27, 179, 148, 0.4);
+}
+
+.save-btn[disabled] {
+  background: #9ca3af;
+  box-shadow: none;
+  transform: none;
+}
+
+.skip-action {
+  text-align: center;
+  margin-top: 32rpx;
+}
+
+.skip-btn {
+  font-size: 28rpx;
+  color: #6b7280;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.skip-btn:active {
+  color: #374151;
+}
+
+/* Privacy Notice */
+.privacy-notice {
+  padding: 0 20rpx;
+  text-align: center;
+}
+
+.privacy-text {
+  font-size: 24rpx;
+  color: #9ca3af;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 750px) {
+  .profile-container {
+    padding: 32rpx 24rpx;
+  }
+  
+  .header-title {
+    font-size: 40rpx;
+  }
+  
+  .header-desc {
+    font-size: 26rpx;
+  }
+  
+  .form-group {
+    padding: 24rpx;
+  }
+  
+  .group-title {
+    font-size: 32rpx;
+  }
+  
+  .item-label {
+    font-size: 28rpx;
+  }
+  
+  .item-input {
+    font-size: 28rpx;
+    height: 80rpx;
+  }
+  
+  .item-textarea {
+    font-size: 28rpx;
+    min-height: 100rpx;
+  }
+  
+  .save-btn {
+    font-size: 32rpx;
+    height: 88rpx;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 16rpx;
+  }
+  
+  .form-item.half {
+    margin-bottom: 16rpx;
+  }
+}
+
+/* Loading and Disabled States */
+.save-btn[loading] {
+  opacity: 0.8;
+}
+
+/* Form Validation States */
+.item-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4rpx rgba(239, 68, 68, 0.1);
+}
+
+.item-textarea.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4rpx rgba(239, 68, 68, 0.1);
+}

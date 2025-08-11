@@ -1,0 +1,97 @@
+<view class="container">
+  <view class="header">
+    <view class="title">🔍 数据库调试</view>
+    <view class="subtitle">检查健康记录数据保存情况</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-section">
+    <view class="loading-icon">⏳</view>
+    <text>加载数据库信息中...</text>
+  </view>
+
+  <view wx:else>
+    <!-- 统计概览 -->
+    <view class="stats-section">
+      <view class="section-title">📊 数据统计</view>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <view class="stat-label">总记录数</view>
+          <view class="stat-value">{{stats.totalRecords}}</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-label">记录日期数</view>
+          <view class="stat-value">{{stats.dates.length}}</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-label">最新记录</view>
+          <view class="stat-value">{{stats.latestRecord.date}}</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-label">最旧记录</view>
+          <view class="stat-value">{{stats.oldestRecord.date}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- API使用统计 -->
+    <view class="api-stats-section" wx:if="{{stats.apiSources}}">
+      <view class="section-title">🤖 API使用统计</view>
+      <view class="api-list">
+        <view class="api-item" wx:for="{{stats.apiSources}}" wx:for-item="count" wx:for-index="api" wx:key="api">
+          <view class="api-name">{{api}}</view>
+          <view class="api-count">{{count}}次</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 日期列表 -->
+    <view class="dates-section" wx:if="{{stats.dates.length > 0}}">
+      <view class="section-title">📅 记录日期</view>
+      <view class="dates-list">
+        <view class="date-item" wx:for="{{stats.dates}}" wx:key="*this">
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 详细记录 -->
+    <view class="records-section" wx:if="{{records.length > 0}}">
+      <view class="section-title">📋 详细记录</view>
+      <view class="records-list">
+        <view class="record-item" wx:for="{{records}}" wx:key="_id">
+          <view class="record-header">
+            <view class="record-date">{{item.date}}</view>
+            <view class="record-time">{{item.time}}</view>
+          </view>
+          <view class="record-details">
+            <view class="detail-item">
+              <text class="detail-label">健康评分:</text>
+              <text class="detail-value">{{item.healthScore}}</text>
+            </view>
+            <view class="detail-item">
+              <text class="detail-label">API来源:</text>
+              <text class="detail-value">{{item.analysis.apiSource || 'unknown'}}</text>
+            </view>
+            <view class="detail-item">
+              <text class="detail-label">记录ID:</text>
+              <text class="detail-value">{{item._id}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无数据提示 -->
+    <view wx:if="{{records.length === 0}}" class="no-data">
+      <view class="no-data-icon">📭</view>
+      <view class="no-data-text">数据库中没有找到健康记录</view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="actions">
+      <button class="action-btn primary" bindtap="testSaveRecord">🧪 测试保存记录</button>
+      <button class="action-btn secondary" bindtap="refreshData">🔄 刷新数据</button>
+      <button class="action-btn tertiary" bindtap="goBack">↩️ 返回</button>
+    </view>
+  </view>
+</view>
