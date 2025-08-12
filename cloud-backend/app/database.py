@@ -1,8 +1,6 @@
 from typing import Generator
-from sqlalchemy import create_engine, event, text
-from sqlalchemy.engine import Engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
-from sqlalchemy.pool import StaticPool
 from app.core.config import settings
 import logging
 
@@ -17,44 +15,23 @@ class Base(DeclarativeBase):
     pass
 
 
-# SQLite 优化配置
-def _enable_sqlite_foreign_keys(dbapi_connection, connection_record):
-    """启用 SQLite 外键约束"""
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA foreign_keys=ON")
-    # 设置 WAL 模式以提高并发性能
-    cursor.execute("PRAGMA journal_mode=WAL")
-    # 设置同步模式为 NORMAL 以平衡性能和安全性
-    cursor.execute("PRAGMA synchronous=NORMAL")
-    # 设置缓存大小 (8MB)
-    cursor.execute("PRAGMA cache_size=-8000")
-    # 设置临时存储为内存
-    cursor.execute("PRAGMA temp_store=MEMORY")
-    # 启用查询优化器分析
-    cursor.execute("PRAGMA optimize")
-    cursor.close()
 
 
-# 创建 SQLite 引擎 - 使用连接池配置
+# 创建 PostgreSQL 引擎 - 使用连接池配置
 engine = create_engine(
-    settings.SQLITE_URL,
-    # SQLite 特定配置
-    connect_args={
-        "check_same_thread": False,  # 允许多线程
-        "timeout": 20  # 连接超时设置
-    },
-    # 连接池配置
-    poolclass=StaticPool,  # SQLite 推荐使用静态连接池
+    settings.DATABASE_URL,
+    # PostgreSQL 连接池配置
+    pool_size=10,  # 连接池大小
+    max_overflow=20,  # 最大溢出连接数
     pool_pre_ping=True,  # 连接前验证连接有效性
     pool_recycle=3600,  # 1小时回收连接
+    pool_timeout=30,  # 连接池获取连接超时时间
     # 性能配置
     echo=False,  # 生产环境关闭 SQL 日志
     echo_pool=False,  # 关闭连接池日志
     future=True,  # 启用 SQLAlchemy 2.0 风格
 )
 
-# 注册 SQLite 优化事件监听器
-event.listen(engine, "connect", _enable_sqlite_foreign_keys)
 
 
 # 创建会话工厂 - 使用现代配置
@@ -88,11 +65,15 @@ def get_db() -> Generator[sessionmaker, None, None]:
 def create_tables() -> None:
     """创建所有数据库表"""
     try:
-        Base.metadata.create_all(bind=engine)
-        logger.info("数据库表创建成功")
+        Base.metadata.create_all(bind=engine, checkfirst=True)
+        logger.info("数据库表检查/创建完成")
     except Exception as e:
         logger.error(f"创建数据库表失败: {e}")
-        raise
+        # 如果是索引已存在的错误，忽略继续执行
+        if "already exists" in str(e):
+            logger.info("某些索引已存在，忽略错误继续执行")
+        else:
+            raise
 
 
 # 数据库健康检查
@@ -113,9 +94,8 @@ def optimize_database() -> None:
     """执行数据库优化操作"""
     try:
         with engine.connect() as connection:
-            # SQLite 优化
-            connection.execute(text("PRAGMA optimize"))
-            connection.execute(text("VACUUM"))
+            # PostgreSQL 优化 - 分析表统计信息
+            connection.execute(text("ANALYZE"))
             connection.commit()
         logger.info("数据库优化完成")
     except Exception as e:

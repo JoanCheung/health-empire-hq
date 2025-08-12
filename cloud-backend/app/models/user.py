@@ -1,9 +1,12 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from sqlalchemy import Boolean, String, DateTime, UniqueConstraint, CheckConstraint, Index
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app.models.health_record import HealthRecord
 
 
 class User(Base):
@@ -100,6 +103,14 @@ class User(Base):
         onupdate=func.now(), 
         nullable=False,
         comment="最后更新时间"
+    )
+
+    # 关联关系
+    health_records: Mapped[list["HealthRecord"]] = relationship(
+        "HealthRecord", 
+        back_populates="user", 
+        cascade="all, delete-orphan",
+        lazy="select"
     )
 
     def __repr__(self) -> str:

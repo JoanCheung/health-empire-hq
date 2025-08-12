@@ -16,7 +16,12 @@ class Settings(BaseSettings):
     SERVER_PORT: int = 8000
     
     # 数据库设置
-    SQLITE_URL: str = "sqlite:///./users.db"
+    DATABASE_URL: str = "postgresql://healthuser:healthpass123@localhost:5432/healthdb"
+    
+    @property
+    def database_url(self) -> str:
+        """获取数据库 URL"""
+        return self.DATABASE_URL
     
     # 安全设置
     SECRET_KEY: str = "your-secret-key-change-this-in-production"

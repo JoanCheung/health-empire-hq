@@ -6,8 +6,8 @@ from app.main import app
 from app.database import get_db, Base
 from app.core.config import settings
 
-# 创建测试数据库
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+# 创建测试数据库 - 使用内存 SQLite 用于测试（更快更安全）
+SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
